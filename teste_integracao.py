@@ -5,35 +5,35 @@ from atividade08 import Curso
 
 class TestIntegracao(unittest.TestCase):
     def setUp(self):
-        # Creating instances of the classes with updated values
+        # Criando instâncias das classes
         self.curso = Curso("Curso de ADS")
-        self.professor = Professor("Luciano Silva", "Engenharia de Software")
-        self.curso.professor = self.professor
-        self.aluno1 = Aluno("Pedro")
-        self.aluno2 = Aluno("Marco")
+        self.professor = Professor("Luciano", 1)  # ID do professor como um número
+        self.curso.adicionar_professor(self.professor)  # Adicionando o professor ao curso
+        self.aluno1 = Aluno("Pedro", 123)  # Supondo que a matrícula seja um número
+        self.aluno2 = Aluno("Marco", 124)
         self.curso.adicionar_aluno(self.aluno1)
         self.curso.adicionar_aluno(self.aluno2)
 
     def test_criacao_professor(self):
-        # Testing if the professor's name and discipline are correct
+        # Testando se o nome do professor está correto
         self.assertEqual(self.professor.nome, "Luciano")
-        self.assertEqual(self.professor.disciplina, "Engenharia de Software")
+        self.assertEqual(self.professor.id, 1)  # Verificando o ID do professor
 
     def test_criacao_alunos(self):
-        # Testing if the number of students in the course is correct
+        # Testando se o número de alunos no curso está correto
         self.assertEqual(len(self.curso.listar_alunos()), 2)
 
     def test_associacao_professor_curso(self):
-        # Testing if the professor is correctly associated with the course
-        self.assertEqual(self.curso.professor.nome, "Luciano")
+        # Testando se o professor está corretamente associado ao curso
+        self.assertEqual(self.curso.get_professor().nome, "Luciano")
 
     def test_listagem_alunos(self):
-        # Testing if the list of students is correct
+        # Testando se a lista de alunos está correta
         alunos = self.curso.listar_alunos()
         self.assertEqual(len(alunos), 2)
-        self.assertIn(self.aluno1, alunos)
-        self.assertIn(self.aluno2, alunos)
+        self.assertIn("Pedro", alunos)  # Verificando se o nome do aluno está na lista
+        self.assertIn("Marco", alunos)
 
-# Fix the typo in the following line to ensure the tests run
+# Executa os testes se o script for chamado diretamente
 if __name__ == "__main__":
     unittest.main()
